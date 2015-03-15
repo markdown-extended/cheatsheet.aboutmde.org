@@ -1,0 +1,9 @@
+# the composer stuff
+composer.lock
+vendor/*
+
+# dev
+dev/*
+
+# hack to allow keeping an empty directory
+!.gitkeep

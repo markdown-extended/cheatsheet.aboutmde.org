@@ -1,0 +1,21 @@
+{
+    "name": "markdown-extended/mde-reminders",
+    "type": "library",
+    "description": "A reminders builder for the Markdown Extended syntax",
+    "homepage": "http://reminders.aboutmde.org/",
+    "license": "GPL-3.0",
+    "authors": [{
+        "name": "Pierre Cassat",
+        "homepage": "http://e-piwi.fr/"
+    }],
+    "require": {
+      "php": ">=5.3.0",
+      "piwi/markdown-extended": "dev-master"
+    },
+    "autoload": { "psr-0": { "MdeReminders": "src" } },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.*-dev"
+        }
+    }
+}

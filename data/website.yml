@@ -6,6 +6,7 @@ sources:        http://github.com/markdown-extended
 author:         About MDE & contributors
 contact:        info@aboutmde.org
 logo:           vendor/markdown-mark/66x40-solid.png
+reminders_url:  "http://cheatsheet.aboutmde.org/markdown_reminders.html"
 
 menu:
     -   slug: home
@@ -26,7 +27,7 @@ menu:
 
 piwik:
     server: stats.ateliers-pierrot.fr
-    idSite: 14
+    site_id: 14
 
 page_footer_left: |
     This page is built with the help of <a href="http://jquery.com">jQuery</a>, <a href="http://getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.

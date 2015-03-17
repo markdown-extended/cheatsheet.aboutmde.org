@@ -66,8 +66,11 @@
                 <p class="text-muted small">
                     {{& page.page_footer}}
                 {{#page.modalbox_link}}
-                    &nbsp;<a href="#" data-toggle="modal" data-target="#page-modal-box">{{page.modalbox_link}}</a>
-                {{/page.modalbox_link}}
+                    &dash; <a href="#" data-toggle="modal" data-target="#page-modal-box">{{page.modalbox_link}}</a>
+                {{/page.modalbox_link}}                
+                {{#page.show_reminders_test_link}}
+                    &dash; <a href="{{& website.reminders_url}}" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
+                {{/page.show_reminders_test_link}}
                 </p>
             </div>
             <hr>
@@ -123,12 +126,12 @@
   (function() {
     var u="//{{server}}/";
     _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', {{idSite}}]);
+    _paq.push(['setSiteId', {{site_id}}]);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<noscript><p><img src="//stats.ateliers-pierrot.fr/piwik.php?idsite=14" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//{{server}}/piwik.php?idsite={{site_id}}" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
 {{/website.piwik}}
 </body>

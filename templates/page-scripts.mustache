@@ -1,6 +1,9 @@
 
 <script src="vendor/jquery/dist/jquery.min.js"></script>
 <script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="lib/bindWithDelay.js"></script>
+<script src="lib/jquery.filtertable.custom.js"></script>
 <script>
 var mdereminders_window; // use this variable to interact with the cheat sheet window
 function mdereminders_popup(url){
@@ -18,4 +21,45 @@ $(function() {
         .attr('href', website_email)
         .html(website_email);
 });
+
+function switchSearchfieldIcon(_el, _noblur){
+    var _val = $(_el).val();
+    if (_val=='') {
+        $('#tableFilter-icon-empty').show();
+        $('#tableFilter-icon-filled').hide();
+        if (_noblur===undefined || _noblur==false) {
+            $(_el).blur();
+        }
+    } else {
+        $('#tableFilter-icon-empty').hide();
+        $('#tableFilter-icon-filled').show();
+    }
+}
+
+$(function() {
+    switchSearchfieldIcon($('#tableFilter'));
+    $('#tableFilter')
+        .bind('keyup', function() {
+            switchSearchfieldIcon($(this));
+        })
+        .bind('focus', function() {
+            switchSearchfieldIcon($(this), true);
+        })
+        ;
+    $('#tableFilter-icon-filled').on('click', function(){
+        $('#tableFilter').val('');
+        switchSearchfieldIcon($('#tableFilter'));
+    });
+    $('#gotoSelector').bind('change', function(){
+        document.location.hash = $(this).val();
+    });
+    $('.tablefiltrable').filterTable({
+        filterContainer: '#filter-field',
+        inputName:       'filter-table',
+        quickList:      ['typographic', 'block', 'miscellaneous'],
+        quickListContainer:'#quick-list-container'
+    });
+});
+
 </script>
+

@@ -17,23 +17,4 @@ page_active:        reminders
 # to show the test reminders link
 show_reminders_test_link: true
 
-contents:
-# a raw content
-- title:        "{CONTENT_TITLE}"
-  description:  "{CONTENT_DESCRIPTION}"
-  intro:        "{CONTENT_INTRO}"
-  content:              "{CONTENT}"
-  notes:
-  - content:            "{CONTENT_NOTE_1}"
-# a markdown file content
-- title:        "{MD_CONTENT_TITLE}"
-  description:  "{MD_CONTENT_DESCRIPTION}"
-  markdown:     page-test
-
-modalbox_link:      "{MODALBOX_LINK}"
-modalbox:
-  label:            "{MODALBOX_LABEL}"
-  description:      "{MODALBOX_DESCRIPTION}"
-  title:            "{MODALBOX_TITLE}"
-  content:          "{MODALBOX_CONTENT}"
-  footer:           "{MODALBOX_FOOTER}"
+content_intro:  "The table below lists all Markdown Extended syntax rules with examples. You can use the search field to filter table entries, or the selector to reach a specific section."

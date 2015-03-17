@@ -24,4 +24,22 @@ body {
     .footer .pull-left, .footer .pull-right { float: none; }
     .footer .text-left, .footer .text-right { text-align: center; }
 }
+
+table td.large { min-width: 200px; }
+table td.large pre   {overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;}
+
+/* Search form on cheat sheet*/
+form.form-nav { position: relative; }
+.form-nav input,
+.form-nav .form-group input { border-radius: 20px; padding-left: 28px; }
+.input-group-addon:first-child,
+.input-group-btn:first-child,
+.input-group .form-control:first-child { border-radius: 20px; }
+.input-group-addon:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child),
+.input-group .form-control:not(:first-child):not(:last-child) { border-radius: 0; }
+.form-nav span.fa { display: block; left: 11px; position: absolute; top: 10px; z-index: 100; }
+.form-nav span.fa.fa-times { cursor: pointer; }
+.form-nav a.quick { font-size: .9em; padding: 0px 4px; }
+
 </style>

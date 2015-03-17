@@ -14,7 +14,8 @@
     "grunt": "^0.4.5",
     "grunt-markdown": "^0.7.0",
     "grunt-merge-data": "^0.4.4",
-    "grunt-mustache-render": "^1.7.0"
+    "grunt-mustache-render": "^1.7.0",
+    "marked": "~0.3.2"
   },
   "scripts": {
     "postinstall" : "node_modules/.bin/bower install",

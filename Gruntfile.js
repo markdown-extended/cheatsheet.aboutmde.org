@@ -22,6 +22,39 @@ var GLOBAL_GRUNT,
 // custom data transformation
 var transformData = function (data)
 {
+    var markdown = require('marked');
+
+    // add the search_query
+
+    // the mde_data for the cheatsheet
+    if (data.mde_data != undefined) {
+        for (var k=0; k<data.mde_data.length; k++) {
+            var item = data.mde_data[k];
+            data.mde_data[k].samples_count = item.samples.length;
+        	if (item.type == 'typo') {
+                data.mde_data[k].type_name  = "Typographic";
+                data.mde_data[k].long_type  = "typographic";
+                data.mde_data[k].short_type = "T";
+        	} else if (item.type == 'block') {
+                data.mde_data[k].type_name  = "Block";
+                data.mde_data[k].long_type  = "block";
+                data.mde_data[k].short_type = "B";
+        	} else if (item.type == 'misc') {
+                data.mde_data[k].type_name  = "Miscellaneous";
+                data.mde_data[k].long_type  = "miscellaneous";
+                data.mde_data[k].short_type = "M";
+        	}
+        	for (var l=0; l<item.samples.length; l++) {
+        	    var new_sample = {};
+        	    if (l>0) {
+                    new_sample.add_tr = true;
+        	    }
+                new_sample.sample = item.samples[l];
+                new_sample.mde_sample = markdown(new_sample.sample);
+                data.mde_data[k].samples[l] = new_sample;
+        	}
+        }
+    }
 
     // current page
     if (data.page.page_logo == undefined) {

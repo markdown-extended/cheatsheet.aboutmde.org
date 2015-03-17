@@ -1,0 +1,8 @@
+{
+    "require": {
+      "piwi/markdown-extended": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "MdeReminders": "src" }
+    }
+}

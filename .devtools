@@ -1,4 +1,4 @@
 DEFAULT_SYNC_METHOD="ftp"
-DEFAULT_SYNC_SERVER="-f ../aboutmde-ftp.conf www/{SUBDIR}"
+DEFAULT_SYNC_SERVER="-f ../aboutmde-ftp.conf www/cheatsheet"
 DEFAULT_SYNC_FTP_EXCLUDED_FILES=( '.git*' .devtools* )
 DEFAULT_SYNC_FTP_EXCLUDED_DIRS=( '.git/*' 'bin/*' '*/.git/*' )

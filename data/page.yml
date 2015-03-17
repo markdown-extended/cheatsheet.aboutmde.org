@@ -1,15 +1,17 @@
-meta_title:         "{META_TITLE}"
-meta_description:   "{META_DESCRIPTION}"
+meta_title:         "MDE Reminders"
+meta_description:   "A cheat-sheet for the Markdown Extended syntax"
 
 # on the basic model: **Markdown** _extended_ (**<strong>MDE</strong>** _<em>dingus</em>_)
-page_title:         "{PAGE_TITLE}"
-page_link:          "{PAGE_LINK}"
-page_description:   "{PAGE_DESCRIPTION}"
-page_footer:        "{PAGE_FOOTER}"
+page_title:         "**MDE** _<em>cheat-sheet</em>_"
+page_link:          "http://cheatsheet.aboutmde.org/"
+page_description:   "a day-to-day syntax reminder"
+page_footer:        |
+                You can find the sources of the reminders online at <a href="http://github.com/markdown-extended/reminders.aboutmde.org" title="See online http://github.com/markdown-extended/reminders.aboutmde.org">http://github.com/markdown-extended/reminders.aboutmde.org</a>.
+
 # use this to change default website.logo
 #page_logo:          ...
 # to show which page is active in the navbar, use the "slug" entry of website.menu
-page_active:        "{PAGE_SLUG}"
+page_active:        reminders
 
 contents:
 # a raw content

@@ -1,8 +1,8 @@
 
 <div class="page-header" id="page-header">
     <h1>
-        <a href="{{page.page_link}}" title="{{page.page_title}}"><img src="{{page.page_logo}}" alt="[M↓]" /></a>&nbsp; {{page.page_title}}
-        <br class="visible-xs"> <small><em>{{page.page_description}}</em></small>
+        <a href="{{& page.page_link}}" title="{{page.page_title}}"><img src="{{& page.page_logo}}" alt="[M↓]" /></a>&nbsp; {{& page.page_title}}
+        <br class="visible-xs"> <small><em>{{& page.page_description}}</em></small>
     </h1>
 </div>
 
@@ -10,25 +10,25 @@
 {{#page.contents}}
 
     {{#title}}
-    <h2>{{title}}
+    <h2>{{& title}}
         {{#description}}
-        &nbsp; <small><em>{{description}}</em></small>
+        &nbsp; <small><em>{{& description}}</em></small>
         {{/description}}
     </h2>
     {{/title}}
 
     {{#intro}}
-    <div class="lead">{{intro}}</div>
+    <div class="lead">{{& intro}}</div>
     {{/intro}}
 
     <div class="container">
-        {{content}}
+        {{& content}}
     </div>
 
     {{#has_notes}}
     <ul class="list-group small">
         {{#notes}}
-        <li class="list-group-item">{{content}}</li>
+        <li class="list-group-item">{{& content}}</li>
         {{/notes}}
     </ul>
     {{/has_notes}}

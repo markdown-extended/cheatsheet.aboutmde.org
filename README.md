@@ -50,10 +50,10 @@ Dependencies
 -   <https://www.npmjs.com/package/grunt-mustache-render>
 -   <https://github.com/janl/mustache.js/>
 -   <https://github.com/shinnn/grunt-merge-data>
+-   <https://github.com/shinnn/grunt-markdown>
 
 ### External assets libraries
 
 -   <http://jquery.com> (manual: <http://api.jquery.com/>)
 -   <http://getbootstrap.com>
 -   <http://fortawesome.github.io/Font-Awesome/> (icons list: <http://fortawesome.github.io/Font-Awesome/icons/>)
--   <http://mynameismatthieu.com/WOW/> (animations: <https://github.com/daneden/animate.css>)

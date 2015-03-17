@@ -6,6 +6,7 @@ sources:        http://github.com/markdown-extended
 author:         About MDE & contributors
 contact:        info@aboutmde.org
 logo:           vendor/markdown-mark/66x40-solid.png
+
 menu:
     -   slug: home
         url: "http://aboutmde.org"
@@ -22,7 +23,13 @@ menu:
     -   slug: reminders
         url: "http://reminders.aboutmde.org"
         title: Syntax reminders
+
 piwik:
     active: true
     server: stats.ateliers-pierrot.fr
     idSite: 14
+
+page_footer_left: |
+    This page is built with the help of <a href="http://jquery.com">jQuery</a>, <a href="http://getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.
+    <br class="hidden-xs hidden-sm">
+    Original <em>MarkdownMark</em> icon made by <a href="http://github.com/dcurtis/markdown-mark">Dustin Curits</a>.

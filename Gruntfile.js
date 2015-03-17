@@ -1,6 +1,7 @@
 
 // global app config
-var PAGE_MODEL = {
+var GLOBAL_GRUNT,
+    PAGE_MODEL = {
     // app paths
     data_dir:       './data/',
     pages_dir:      './pages/',
@@ -18,8 +19,54 @@ var PAGE_MODEL = {
     data_src:       './data/*.yml'
 };
 
+// custom data transformation
+var transformData = function (data)
+{
+
+    // current page
+    if (data.page.page_logo == undefined) {
+        data.page.page_logo = data.website.logo;
+    }
+    for (var i=0; i<data.website.menu.length; i++) {
+        var slug = data.website.menu[i].slug,
+            active = data.page.page_active || '';
+        if (slug == active) {
+            data.website.menu[i].is_active = true;
+            data.page.page_link = data.website.menu[i].url;
+            if (data.page.page_title == undefined) {
+                data.page.page_title = data.website.menu[i].title;
+            }
+        } else {
+            data.website.menu[i].is_active = false;
+        }
+    }
+
+    // organize contents
+    if (data.page.contents != undefined) {
+        for (var j=0; j<data.page.contents.length; j++) {
+            // markdown content
+            if (data.page.contents[j].markdown != undefined) {
+                var filename = data.page.contents[j].markdown,
+                    mdfile = PAGE_MODEL.tmp_dir + 'pages/' + filename.replace(PAGE_MODEL.html_ext, '') + PAGE_MODEL.html_ext;
+                data.page.contents[j].content = GLOBAL_GRUNT.file.read(mdfile);
+            } else {
+                if (data.page.contents[j].notes && data.page.contents[j].notes.length>0) {
+                    data.page.contents[j].has_notes = true;
+                }
+            }
+            if (j<(data.page.contents.length-1)) {
+                data.page.contents[j].show_hr = true;
+            }
+        }
+    }
+
+    // always return the full data
+    return data;
+};
+
 // grunt compilation
 module.exports = function(grunt) {
+    GLOBAL_GRUNT = grunt;
     grunt.initConfig({
         markdown: {
             all: {
@@ -36,44 +83,7 @@ module.exports = function(grunt) {
         },
         merge_data: {
             options: {
-                data: function (data) {
-                    // current page
-                    if (data.page.page_logo == undefined) {
-                        data.page.page_logo = data.website.logo;
-                    }
-                    for (var i=0; i<data.website.menu.length; i++) {
-                        var slug = data.website.menu[i].slug,
-                            active = data.page.page_active || '';
-                        if (slug == active) {
-                            data.website.menu[i].is_active = true;
-                            data.page.page_link = data.website.menu[i].url;
-                            if (data.page.page_title == undefined) {
-                                data.page.page_title = data.website.menu[i].title;
-                            }
-                        } else {
-                            data.website.menu[i].is_active = false;
-                        }
-                    }
-                    // organize contents
-                    if (data.page.contents != undefined) {
-                        for (var j=0; j<data.page.contents.length; j++) {
-                            // markdown content
-                            if (data.page.contents[j].markdown != undefined) {
-                                var filename = data.page.contents[j].markdown,
-                                    mdfile = PAGE_MODEL.tmp_dir + 'pages/' + filename.replace(PAGE_MODEL.html_ext, '') + PAGE_MODEL.html_ext;
-                                data.page.contents[j].content = grunt.file.read(mdfile);
-                            } else {
-                                if (data.page.contents[j].notes && data.page.contents[j].notes.length>0) {
-                                    data.page.contents[j].has_notes = true;
-                                }
-                            }
-                            if (j<(data.page.contents.length-1)) {
-                                data.page.contents[j].show_hr = true;
-                            }
-                        }
-                    }
-                    return data;
-                }
+                data:   function(data){ return transformData(data); }
             },
             all: {
                 src:    PAGE_MODEL.data_src,
@@ -83,7 +93,6 @@ module.exports = function(grunt) {
         mustache_render: {
             options: {
                 clear_cache:    true,
-                escape:         false,
                 directory:      PAGE_MODEL.templates_dir
             },
             all: {

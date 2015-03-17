@@ -24,7 +24,7 @@ contents:
 # a markdown file content
 - title:        "{MD_CONTENT_TITLE}"
   description:  "{MD_CONTENT_DESCRIPTION}"
-  markdown:     Test
+  markdown:     page-test
 
 modalbox_link:      "{MODALBOX_LINK}"
 modalbox:

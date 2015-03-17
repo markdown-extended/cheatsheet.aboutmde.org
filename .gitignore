@@ -1,5 +1,6 @@
 # for all forks
 node_modules/*
+git_modules/*
 composer.lock
 vendor/*
 */vendor/*

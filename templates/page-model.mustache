@@ -21,12 +21,12 @@
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{website.home}}" title="{{website.presentation}}">{{website.name}}</a>
+                <a class="navbar-brand" href="{{& website.home}}" title="{{website.presentation}}">{{website.name}}</a>
             </div>
             <div class="collapse navbar-collapse" id="page-navbar">
                 <ul class="nav navbar-nav">
                 {{#website.menu}}
-                    <li class="{{#is_active}}active{{/is_active}}"><a href="{{url}}">{{title}}{{#is_active}} <span class="sr-only">(current)</span>{{/is_active}}</a></li>
+                    <li class="{{#is_active}}active{{/is_active}}"><a href="{{& url}}">{{title}}{{#is_active}} <span class="sr-only">(current)</span>{{/is_active}}</a></li>
                 {{/website.menu}}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="tools-list">
                         {{#tools}}
-                            <li><a href="{{link}}" title="{{description}}">{{name}}</a></li>
+                            <li><a href="{{& link}}" title="{{description}}">{{name}}</a></li>
                         {{/tools}}
                         </ul>
                     </li>
@@ -42,12 +42,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Implementations <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="implementations-list">
                         {{#implementations}}
-                            <li><a href="{{link}}" title="{{description}}">{{name}}</a></li>
+                            <li><a href="{{& link}}" title="{{description}}">{{name}}</a></li>
                         {{/implementations}}
                         </ul>
                     </li>
                     <li>
-                        <a href="{{website.sources}}" title="{{website.sources}}"><i class="fa fa-github"></i></a>
+                        <a href="{{& website.sources}}" title="{{website.sources}}"><i class="fa fa-github"></i></a>
                     </li>
                 </ul>
             </div>
@@ -64,7 +64,7 @@
         <div class="container">
             <div class="cleafix">
                 <p class="text-muted small">
-                    {{page.page_footer}}
+                    {{& page.page_footer}}
                 {{#page.modalbox_link}}
                     &nbsp;<a href="#" data-toggle="modal" data-target="#page-modal-box">{{page.modalbox_link}}</a>
                 {{/page.modalbox_link}}
@@ -72,19 +72,15 @@
             </div>
             <hr>
             <div class="pull-left text-left">
-                <p class="text-muted small">
-                    This page is built with the help of <a href="http://jquery.com">jQuery</a>, <a href="http://getbootstrap.com">Bootstrap</a>, <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a> and <a href="http://mynameismatthieu.com/WOW/">WOW</a>.
-                    <br class="hidden-xs hidden-sm">
-                    Original <em>MarkdownMark</em> icon made by <a href="http://github.com/dcurtis/markdown-mark">Dustin Curits</a>.
-                </p>
+                <p class="text-muted small">{{& website.page_footer_left}}</p>
             </div>
             <div class="pull-right text-right">
                 <p class="text-muted small">
-                    <a href="{{website.home}}">{{website.shortname}}</a>
+                    <a href="{{& website.home}}">{{website.shortname}}</a>
                     &nbsp;-&nbsp;
                     <a href="#" id="website-mailto"></a>
                     <br class="hidden-xs hidden-sm">
-                    Original sources are available at <a href="{{website.sources}}">{{website.sources}}</a>.
+                    Original sources are available at <a href="{{& website.sources}}">{{website.sources}}</a>.
                 </p>
             </div>
         </div>
@@ -101,11 +97,11 @@
                 </div>
         {{/title}}
                 <div class="modal-body">
-                    {{content}}
+                    {{& content}}
                 </div>
        {{#footer}}
                 <div class="modal-footer">
-                    {{footer}}
+                    {{& footer}}
                 </div>
        {{/footer}}
             </div>

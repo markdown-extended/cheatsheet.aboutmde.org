@@ -9,7 +9,7 @@ logo:           vendor/markdown-mark/66x40-solid.png
 
 menu:
     -   slug: home
-        url: "http://aboutmde.org"
+        url: "http://home.aboutmde.org"
         title: Home
     -   slug: manifest
         url: "http://manifest.aboutmde.org"
@@ -21,11 +21,10 @@ menu:
         url: "http://api.aboutmde.org"
         title: Online API
     -   slug: reminders
-        url: "http://reminders.aboutmde.org"
-        title: Syntax reminders
+        url: "http://cheatsheet.aboutmde.org"
+        title: Syntax cheat-sheet
 
 piwik:
-    active: true
     server: stats.ateliers-pierrot.fr
     idSite: 14
 

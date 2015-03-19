@@ -10,8 +10,8 @@ env.yml
 !build/env/*/env.yml
 
 # for the main repo only
-www/*.html
-www/.htaccess
+#www/*.html
+#www/.htaccess
 
 # hack
 !.gitkeep

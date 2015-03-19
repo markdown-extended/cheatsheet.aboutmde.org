@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MDE cheat-sheet &bull; aboutmde.org</title>
+    <meta name="description" content="A cheat-sheet for the Markdown Extended syntax">
+    <link rel="icon" type="image/png" href="32x32-solid.png" sizes="32x32">
+
+
+<link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="vendor/fontawesome/css/font-awesome.min.css" rel="stylesheet">
+<style>
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    margin-bottom: 170px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 160px;
+    background-color: #f5f5f5;
+    padding-top: 20px;
+}
+.navbar { margin-bottom: 0; }
+@media screen and (max-width: 767px) {
+    body    { margin-bottom: 300px; }
+    .footer { height: 290px; }
+    .footer .pull-left, .footer .pull-right { float: none; }
+    .footer .text-left, .footer .text-right { text-align: center; }
+}
+
+table td.large { min-width: 200px; }
+table td.large pre   {overflow-x: auto; white-space: pre-wrap; word-wrap: break-word;}
+
+/* Search form on cheat sheet*/
+form.form-nav { position: relative; }
+.form-nav input,
+.form-nav .form-group input { border-radius: 20px; padding-left: 28px; }
+.input-group-addon:first-child,
+.input-group-btn:first-child,
+.input-group .form-control:first-child { border-radius: 20px; }
+.input-group-addon:not(:first-child):not(:last-child),
+.input-group-btn:not(:first-child):not(:last-child),
+.input-group .form-control:not(:first-child):not(:last-child) { border-radius: 0; }
+.form-nav span.fa { display: block; left: 11px; position: absolute; top: 10px; z-index: 100; }
+.form-nav span.fa.fa-times { cursor: pointer; }
+.form-nav a.quick { font-size: .9em; padding: 0px 4px; }
+
+</style>
+
+</head>
+<body>
+    <a href="#page-content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <a href="#page-menu" class="sr-only sr-only-focusable">Skip to main menu</a>
+
+    <nav class="navbar navbar-inverse navbar-static-top" id="page-menu">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#page-navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://aboutmde.org/" title="**Markdown** _extended_ - aboutmde.org">About MDE</a>
+            </div>
+            <div class="collapse navbar-collapse" id="page-navbar">
+                <ul class="nav navbar-nav">
+                    <li class=""><a href="http://home.aboutmde.org">Home</a></li>
+                    <li class=""><a href="http://manifest.aboutmde.org">Manifest</a></li>
+                    <li class=""><a href="http://dingus.aboutmde.org">Dingus</a></li>
+                    <li class=""><a href="http://api.aboutmde.org">Online API</a></li>
+                    <li class="active"><a href="http://cheatsheet.aboutmde.org">Syntax cheat-sheet <span class="sr-only">(current)</span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" id="tools-list">
+                            <li><a href="http://github.com/markdown-extended/test-suite" title="Test-suite for MDE specifications implementations">test-suite</a></li>
+                            <li><a href="http://github.com/markdown-extended/vim-mde-syntax" title="Syntax highlighting for Markdown Extended files in VIM">vim-mde-syntax</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Implementations <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" id="implementations-list">
+                            <li><a href="http://github.com/piwi/markdown-extended" title="A PHP parser for the Markdown Extended syntax">php-markdown-extended</a></li>
+                            <li><a href="https://github.com/markdown-extended/ruby-gem" title="">ruby-gem</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="http://github.com/markdown-extended" title="http:&#x2F;&#x2F;github.com&#x2F;markdown-extended"><i class="fa fa-github"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container main-container">
+
+
+<div class="page-header" id="page-header">
+    <h1>
+        <a href="/?#" title="**MDE** _&lt;em&gt;cheat-sheet&lt;&#x2F;em&gt;_"><img src="vendor/markdown-mark/66x40-solid.png" alt="[M↓]" /></a>&nbsp; **MDE** _<em>cheat-sheet</em>_
+        <br class="visible-xs"> <small><em>a day-to-day syntax reminder</em></small>
+    </h1>
+</div>
+
+<div class="content" id="page-content" role="main">        
+
+
+    <div class="container">
+
+
+<div class="alert alert-info dismissable visible-xs">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>NOTE</strong> - As this table is quite large, you should go to the "landscape" view of your device to view it under optimal conditions.
+</div>
+
+<br class="clearfix">
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <form class="form-horizontal form-nav" role="form" id="filter-field">
+            <label class="sr-only control-label" for="tableFilter">Filter table entries</label>
+            <span class="fa fa-search" id="tableFilter-icon-empty"></span>
+            <a href="#" title="Empty this search field" id="tableFilter-icon-filled"><span class="fa fa-times"></span></a>
+            <input type="search" name="filter-table" id="tableFilter" class="form-control search-query" placeholder="Filter table values" title="Type a string to filter table entries" tabindex="1" value="">
+            <p class="help-block">Presets: <span id="quick-list-container"></span></p>
+        </form>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <select class="form-control" id="gotoSelector">
+              <option value="" class="disabled">Go to a section</option>
+              <option value="strong">strong</option>
+              <option value="italic">italic</option>
+              <option value="link">link</option>
+              <option value="anchor">anchor</option>
+              <option value="code">code</option>
+              <option value="image">image</option>
+              <option value="abbreviation">abbreviation</option>
+              <option value="headers">headers</option>
+              <option value="horizontal-rule">horizontal-rule</option>
+              <option value="blockquote">blockquote</option>
+              <option value="pre-formated">pre-formated</option>
+              <option value="definitions-list">definitions-list</option>
+              <option value="unordered-list">unordered-list</option>
+              <option value="ordered-list">ordered-list</option>
+              <option value="paragraph">paragraph</option>
+              <option value="table">table</option>
+              <option value="footnote">footnote</option>
+              <option value="references">references</option>
+              <option value="escaping">escaping</option>
+              <option value="meta tags">meta tags</option>
+              <option value="inclusion">inclusion</option>
+              <option value="raw html">raw html</option>
+        </select>
+    </div>
+</div>
+<br class="clearfix">
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover tablefiltrable">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Sample</th>
+        <th>Rendering</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="strong" rowspan="2" data-filter-value="strong">
+            strong
+        </td>
+		
+        <td class="large"><pre>**hello**</pre></td>
+        <td class="large"><p><strong>hello</strong></p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>__hello__</pre></td>
+        <td class="large"><p><strong>hello</strong></p>
+</td>
+    </tr>
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="italic" rowspan="2" data-filter-value="italic">
+            italic
+        </td>
+		
+        <td class="large"><pre>*hello*</pre></td>
+        <td class="large"><p><em>hello</em></p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>_hello_</pre></td>
+        <td class="large"><p><em>hello</em></p>
+</td>
+    </tr>
+    <tr data-rows="3">
+        <td rowspan="3" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="link" rowspan="3" data-filter-value="link">
+            link
+        </td>
+		
+        <td class="large"><pre>&lt;http:&#x2F;&#x2F;example.com&#x2F;&gt;</pre></td>
+        <td class="large"><p><a href="http://example.com/">http://example.com/</a></p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>&lt;email@example.com&gt;</pre></td>
+        <td class="large"><p><a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#x65;&#x6d;&#97;&#105;&#x6c;&#64;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#99;&#x6f;&#x6d;">&#x65;&#x6d;&#97;&#105;&#x6c;&#64;&#101;&#120;&#x61;&#x6d;&#x70;&#x6c;&#x65;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>[an hypertext link](http:&#x2F;&#x2F;example.com&#x2F; &quot;Optional link title&quot;)</pre></td>
+        <td class="large"><p><a href="http://example.com/" title="Optional link title">an hypertext link</a></p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="anchor" rowspan="1" data-filter-value="anchor">
+            anchor
+        </td>
+		
+        <td class="large"><pre>## title with anchor {#anchor}
+
+some text
+
+a link to [declared anchor](#anchor)</pre></td>
+        <td class="large"><h2 id="title-with-anchor-anchor-">title with anchor {#anchor}</h2>
+<p>some text</p>
+<p>a link to <a href="#anchor">declared anchor</a></p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="code" rowspan="1" data-filter-value="code">
+            code
+        </td>
+		
+        <td class="large"><pre>`function()`</pre></td>
+        <td class="large"><p><code>function()</code></p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="image" rowspan="1" data-filter-value="image">
+            image
+        </td>
+		
+        <td class="large"><pre>![Alt text](http:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;5&#x2F;5a&#x2F;Wikipedia-logo-v2-fr.png &quot;Optional image title&quot;)</pre></td>
+        <td class="large"><p><img src="http://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia-logo-v2-fr.png" alt="Alt text" title="Optional image title"></p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="abbreviation" rowspan="1" data-filter-value="abbreviation">
+            abbreviation
+        </td>
+		
+        <td class="large"><pre>A paragraph with the word HTML.
+
+*[HTML]: Hyper-Text Markup Language
+</pre></td>
+        <td class="large"><p>A paragraph with the word HTML.</p>
+<p>*[HTML]: Hyper-Text Markup Language</p>
+</td>
+    </tr>
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="headers" rowspan="2" data-filter-value="headers">
+            headers
+        </td>
+		
+        <td class="large"><pre>my title level 1
+================
+
+my title level 2
+----------------
+
+### my title level 3</pre></td>
+        <td class="large"><h1 id="my-title-level-1">my title level 1</h1>
+<h2 id="my-title-level-2">my title level 2</h2>
+<h3 id="my-title-level-3">my title level 3</h3>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre># my title level 1
+### my title level 3</pre></td>
+        <td class="large"><h1 id="my-title-level-1">my title level 1</h1>
+<h3 id="my-title-level-3">my title level 3</h3>
+</td>
+    </tr>
+    <tr data-rows="3">
+        <td rowspan="3" data-filter-value="typographic">
+            <abbr title="Typographic">T</abbr>
+        </td>
+        <td id="horizontal-rule" rowspan="3" data-filter-value="horizontal-rule">
+            horizontal-rule
+        </td>
+		
+        <td class="large"><pre>----</pre></td>
+        <td class="large"><hr>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>****</pre></td>
+        <td class="large"><hr>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>____</pre></td>
+        <td class="large"><hr>
+</td>
+    </tr>
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="blockquote" rowspan="2" data-filter-value="blockquote">
+            blockquote
+        </td>
+		
+        <td class="large"><pre>&gt; This is my blockquote
+  and a second line ...
+</pre></td>
+        <td class="large"><blockquote>
+<p>This is my blockquote
+  and a second line ...</p>
+</blockquote>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>&gt; (http:&#x2F;&#x2F;source.com) This is my blockquote
+  and a second line ...
+</pre></td>
+        <td class="large"><blockquote>
+<p>(<a href="http://source.com">http://source.com</a>) This is my blockquote
+  and a second line ...</p>
+</blockquote>
+</td>
+    </tr>
+    <tr data-rows="3">
+        <td rowspan="3" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="pre-formated" rowspan="3" data-filter-value="pre-formated">
+            pre-formated
+        </td>
+		
+        <td class="large"><pre>    &#x2F;&#x2F; this is my &#39;pre&#39; block
+    $var = val_fct();
+    html &lt;strong&gt;tags&lt;&#x2F;strong&gt; are escaped</pre></td>
+        <td class="large"><pre><code>// this is my &#39;pre&#39; block
+$var = val_fct();
+html &lt;strong&gt;tags&lt;/strong&gt; are escaped
+</code></pre></td>
+    </tr>
+		<tr>
+        <td class="large"><pre>~~~~
+My code here
+~~~~
+</pre></td>
+        <td class="large"><pre><code>My code here
+</code></pre></td>
+    </tr>
+		<tr>
+        <td class="large"><pre>~~~~html
+My code here
+~~~~
+</pre></td>
+        <td class="large"><pre><code class="lang-html">My code here
+</code></pre>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="definitions-list" rowspan="1" data-filter-value="definitions-list">
+            definitions-list
+        </td>
+		
+        <td class="large"><pre>Word
+:   Definition content (first one)
+    with a two-lines text
+
+:   Second definition for this term...
+</pre></td>
+        <td class="large"><p>Word
+:   Definition content (first one)
+    with a two-lines text</p>
+<p>:   Second definition for this term...</p>
+</td>
+    </tr>
+    <tr data-rows="3">
+        <td rowspan="3" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="unordered-list" rowspan="3" data-filter-value="unordered-list">
+            unordered-list
+        </td>
+		
+        <td class="large"><pre>-   first item
+-   second item
+</pre></td>
+        <td class="large"><ul>
+<li>first item</li>
+<li>second item</li>
+</ul>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>+   first item
++   second item
+</pre></td>
+        <td class="large"><ul>
+<li>first item</li>
+<li>second item</li>
+</ul>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>*   first item
+*   second item
+</pre></td>
+        <td class="large"><ul>
+<li>first item</li>
+<li>second item</li>
+</ul>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="ordered-list" rowspan="1" data-filter-value="ordered-list">
+            ordered-list
+        </td>
+		
+        <td class="large"><pre>1.   first item
+1.   second item
+</pre></td>
+        <td class="large"><ol>
+<li>first item</li>
+<li>second item</li>
+</ol>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="paragraph" rowspan="1" data-filter-value="paragraph">
+            paragraph
+        </td>
+		
+        <td class="large"><pre>This is my first paragraph.
+
+And this is my second,
+on two lines ...
+</pre></td>
+        <td class="large"><p>This is my first paragraph.</p>
+<p>And this is my second,
+on two lines ...</p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="table" rowspan="1" data-filter-value="table">
+            table
+        </td>
+		
+        <td class="large"><pre>[table caption]
+| First Header  | Second Header | Third Header |
+| ------------- | ------------: | :----------: |
+| Content Cell  | Content right-aligned | Content center-aligned |
+| Content Cell  | Content on two columns ||
+</pre></td>
+        <td class="large"><p>[table caption]
+| First Header  | Second Header | Third Header |
+| ------------- | ------------: | :----------: |
+| Content Cell  | Content right-aligned | Content center-aligned |
+| Content Cell  | Content on two columns ||</p>
+</td>
+    </tr>
+    <tr data-rows="3">
+        <td rowspan="3" data-filter-value="block">
+            <abbr title="Block">B</abbr>
+        </td>
+        <td id="footnote" rowspan="3" data-filter-value="footnote">
+            footnote
+        </td>
+		
+        <td class="large"><pre>A paragraph with a footnote[^footnote_one] note.
+
+[^footnote_one]: Footnote content
+</pre></td>
+        <td class="large"><p>A paragraph with a footnote[^footnote_one] note.</p>
+<p>[^footnote_one]: Footnote content</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>A paragraph with a referenced glossary term[^myterm] ...
+
+[^myterm]: glossary: the term defined (an optional sort key)
+The term definition ... which may be multi-line.
+</pre></td>
+        <td class="large"><p>A paragraph with a referenced glossary term[^myterm] ...</p>
+<p>[^myterm]: glossary: the term defined (an optional sort key)
+The term definition ... which may be multi-line.</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>This is a statement that should be attributed to its source [p. 23][#Doe:2006].
+
+[#Doe:2006]: John Doe. *Some Big Fancy Book*.  Vanity Press, 2006.
+</pre></td>
+        <td class="large"><p>This is a statement that should be attributed to its source [p. 23][#Doe:2006].</p>
+<p>[#Doe:2006]: John Doe. <em>Some Big Fancy Book</em>.  Vanity Press, 2006.</p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="miscellaneous">
+            <abbr title="Miscellaneous">M</abbr>
+        </td>
+        <td id="references" rowspan="1" data-filter-value="references">
+            references
+        </td>
+		
+        <td class="large"><pre>A paragraph with a referenced [hypertext link][myid] and some more text embedding an
+image: ![image for the test][myimage].
+
+[myid]: http:&#x2F;&#x2F;example.com&#x2F; &quot;Optional link title&quot;        
+[myimage]: http:&#x2F;&#x2F;upload.wikimedia.org&#x2F;wikipedia&#x2F;commons&#x2F;5&#x2F;5a&#x2F;Wikipedia-logo-v2-fr.png &quot;Optional image title&quot;
+</pre></td>
+        <td class="large"><p>A paragraph with a referenced <a href="http://example.com/" title="Optional link title">hypertext link</a> and some more text embedding an
+image: <img src="http://upload.wikimedia.org/wikipedia/commons/5/5a/Wikipedia-logo-v2-fr.png" alt="image for the test" title="Optional image title">.</p>
+</td>
+    </tr>
+    <tr data-rows="12">
+        <td rowspan="12" data-filter-value="miscellaneous">
+            <abbr title="Miscellaneous">M</abbr>
+        </td>
+        <td id="escaping" rowspan="12" data-filter-value="escaping">
+            escaping
+        </td>
+		
+        <td class="large"><pre>\ backslash</pre></td>
+        <td class="large"><p>\ backslash</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\. dot</pre></td>
+        <td class="large"><p>. dot</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\! exclamation point</pre></td>
+        <td class="large"><p>! exclamation point</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\# hash mark</pre></td>
+        <td class="large"><p># hash mark</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\* asterisk</pre></td>
+        <td class="large"><p>* asterisk</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\+ plus sign</pre></td>
+        <td class="large"><p>+ plus sign</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\- hyphen</pre></td>
+        <td class="large"><p>- hyphen</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\_ underscore</pre></td>
+        <td class="large"><p>_ underscore</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\` backtick quote</pre></td>
+        <td class="large"><p>` backtick quote</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\(\) parentheses</pre></td>
+        <td class="large"><p>() parentheses</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\[\] brackets</pre></td>
+        <td class="large"><p>[] brackets</p>
+</td>
+    </tr>
+		<tr>
+        <td class="large"><pre>\{\} curly brackets</pre></td>
+        <td class="large"><p>{} curly brackets</p>
+</td>
+    </tr>
+    <tr data-rows="1">
+        <td rowspan="1" data-filter-value="miscellaneous">
+            <abbr title="Miscellaneous">M</abbr>
+        </td>
+        <td id="meta tags" rowspan="1" data-filter-value="meta tags">
+            meta tags
+        </td>
+		
+        <td class="large"><pre>meta-name-1: my value for the meta-tag 1
+meta-name-2: my meta-2 value
+    on two lines eventually
+
+this is your content after a blank line (we are at the very top of the document)
+
+**parsed version of this sample may not be pertinent (meta data are not dipslayed)**
+</pre></td>
+        <td class="large"><p>meta-name-1: my value for the meta-tag 1
+meta-name-2: my meta-2 value
+    on two lines eventually</p>
+<p>this is your content after a blank line (we are at the very top of the document)</p>
+<p><strong>parsed version of this sample may not be pertinent (meta data are not dipslayed)</strong></p>
+</td>
+    </tr>
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="miscellaneous">
+            <abbr title="Miscellaneous">M</abbr>
+        </td>
+        <td id="inclusion" rowspan="2" data-filter-value="inclusion">
+            inclusion
+        </td>
+		
+        <td class="large"><pre>&lt;!-- @inclusion-test.md@ --&gt;</pre></td>
+        <td class="large"><!-- @inclusion-test.md@ --></td>
+    </tr>
+		<tr>
+        <td class="large"><pre>&lt;!-- @not-found.md@ --&gt;</pre></td>
+        <td class="large"><!-- @not-found.md@ --></td>
+    </tr>
+    <tr data-rows="2">
+        <td rowspan="2" data-filter-value="miscellaneous">
+            <abbr title="Miscellaneous">M</abbr>
+        </td>
+        <td id="raw html" rowspan="2" data-filter-value="raw html">
+            raw html
+        </td>
+		
+        <td class="large"><pre>&lt;div class=&#39;my-class&#39;&gt;My &lt;strong&gt;raw&lt;&#x2F;strong&gt; HTML content.&lt;&#x2F;div&gt;</pre></td>
+        <td class="large"><div class='my-class'>My <strong>raw</strong> HTML content.</div></td>
+    </tr>
+		<tr>
+        <td class="large"><pre>&lt;div class=&#39;my-class&#39; markdown=&#39;1&#39;&gt;My **raw** HTML content.&lt;&#x2F;div&gt;</pre></td>
+        <td class="large"><div class='my-class' markdown='1'>My <strong>raw</strong> HTML content.</div></td>
+    </tr>
+
+    </tbody>
+    </table>
+</div>
+
+<!--
+<?php
+$_footnotes = $cheat_sheet->getFootnotes();
+if (!empty($_footnotes)) : ?>
+<div class="footnotes">
+    <ol>
+    <?php foreach ($_footnotes as $id=>$note_content) : ?>
+        <li id="<?php echo $note_content['note-id']; ?>"><?php echo $note_content['text']; ?></li>
+    <?php endforeach; ?>
+    </ol>
+</div>
+<?php endif; ?>
+-->
+
+    </div>
+
+</div>
+
+
+    </div>
+
+    <footer class="footer" id="page-footer">
+        <div class="container">
+            <div class="cleafix">
+                <p class="text-muted small">
+                    You can find the sources of the reminders online at <a href="http://github.com/markdown-extended/reminders.aboutmde.org" title="See online http://github.com/markdown-extended/reminders.aboutmde.org">http://github.com/markdown-extended/reminders.aboutmde.org</a>.
+
+                    &dash; <a href="http://cheatsheet.aboutmde.org/markdown_reminders.html" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
+                </p>
+            </div>
+            <hr>
+            <div class="pull-left text-left">
+                <p class="text-muted small">This page is built with the help of <a href="http://jquery.com">jQuery</a>, <a href="http://getbootstrap.com">Bootstrap</a> and <a href="http://fortawesome.github.io/Font-Awesome/">Font Awesome</a>.
+<br class="hidden-xs hidden-sm">
+Original <em>MarkdownMark</em> icon made by <a href="http://github.com/dcurtis/markdown-mark">Dustin Curits</a>.
+</p>
+            </div>
+            <div class="pull-right text-right">
+                <p class="text-muted small">
+                    <a href="http://aboutmde.org/">aboutmde.org</a>
+                    &nbsp;-&nbsp;
+                    <a href="#" id="website-mailto"></a>
+                    <br class="hidden-xs hidden-sm">
+                    Original sources are available at <a href="http://github.com/markdown-extended">http:&#x2F;&#x2F;github.com&#x2F;markdown-extended</a>.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+
+<script src="vendor/jquery/dist/jquery.min.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="lib/bindWithDelay.js"></script>
+<script src="lib/jquery.filtertable.custom.js"></script>
+<script>
+var mdereminders_window; // use this variable to interact with the cheat sheet window
+function mdereminders_popup(url){
+    if (!url) url='http://cheatsheet.aboutmde.org/markdown_reminders.html';
+    if (url.lastIndexOf("popup")==-1) url += (url.lastIndexOf("?")!=-1) ? '&popup' : '?popup';
+    mdereminders_window = window.open(url, 'markdown_reminders',
+        'directories=0,menubar=0,status=0,location=0,scrollbars=1,resizable=1,fullscreen=0,width=840,height=380,left=120,top=120');
+    mdereminders_window.focus();
+    return false;
+}
+
+$(function() {
+    var website_email = 'info@aboutmde.org';
+    $('#website-mailto')
+        .attr('href', website_email)
+        .html(website_email);
+});
+
+function switchSearchfieldIcon(_el, _noblur){
+    var _val = $(_el).val();
+    if (_val=='') {
+        $('#tableFilter-icon-empty').show();
+        $('#tableFilter-icon-filled').hide();
+        if (_noblur===undefined || _noblur==false) {
+            $(_el).blur();
+        }
+    } else {
+        $('#tableFilter-icon-empty').hide();
+        $('#tableFilter-icon-filled').show();
+    }
+}
+
+$(function() {
+    switchSearchfieldIcon($('#tableFilter'));
+    $('#tableFilter')
+        .bind('keyup', function() {
+            switchSearchfieldIcon($(this));
+        })
+        .bind('focus', function() {
+            switchSearchfieldIcon($(this), true);
+        })
+        ;
+    $('#tableFilter-icon-filled').on('click', function(){
+        $('#tableFilter').val('');
+        switchSearchfieldIcon($('#tableFilter'));
+    });
+    $('#gotoSelector').bind('change', function(){
+        document.location.hash = $(this).val();
+    });
+    $('.tablefiltrable').filterTable({
+        filterContainer: '#filter-field',
+        inputName:       'filter-table',
+        quickList:      ['typographic', 'block', 'miscellaneous'],
+        quickListContainer:'#quick-list-container'
+    });
+});
+
+</script>
+
+
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+  _paq.push(["setCookieDomain", "*.aboutmde.org"]);
+  _paq.push(["setDoNotTrack", true]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//stats.ateliers-pierrot.fr/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 14]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//stats.ateliers-pierrot.fr/piwik.php?idsite=14" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+</body>
+</html>

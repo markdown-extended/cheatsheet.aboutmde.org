@@ -1,0 +1,11 @@
+meta_title:         "Not found"
+meta_robots:        none
+page_title:         "oups :("
+page_description:   "404 not found error"
+page_content: |
+    The page you are looking for does not exist :(
+    <br>
+    You should <a href="http://aboutmde.org">go back to the homepage</a> and start from scratch ...
+    <br>
+    <br>
+    Sorry for the inconvenience.

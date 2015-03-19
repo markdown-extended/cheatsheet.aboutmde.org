@@ -4,7 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{page.meta_title}} &bull; {{website.shortname}}</title>
+    {{#page.meta_description}}
     <meta name="description" content="{{page.meta_description}}">
+    {{/page.meta_description}}
+    {{#page.meta_robots}}
+    <meta name="robots" content="{{page.meta_robots}}">
+    {{/page.meta_robots}}
     <link rel="icon" type="image/png" href="32x32-solid.png" sizes="32x32">
 
     {{> page-styles}}
@@ -25,9 +30,9 @@
             </div>
             <div class="collapse navbar-collapse" id="page-navbar">
                 <ul class="nav navbar-nav">
-                {{#website.menu}}
+                {{#env.menu}}
                     <li class="{{#is_active}}active{{/is_active}}"><a href="{{& url}}">{{title}}{{#is_active}} <span class="sr-only">(current)</span>{{/is_active}}</a></li>
-                {{/website.menu}}
+                {{/env.menu}}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
@@ -69,7 +74,7 @@
                     &dash; <a href="#" data-toggle="modal" data-target="#page-modal-box">{{page.modalbox_link}}</a>
                 {{/page.modalbox_link}}                
                 {{#page.show_reminders_test_link}}
-                    &dash; <a href="{{& website.reminders_url}}" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
+                    &dash; <a href="{{& env.reminders_url}}" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
                 {{/page.show_reminders_test_link}}
                 </p>
             </div>
@@ -114,7 +119,7 @@
 
     {{> page-scripts}}
 
-{{#website.piwik}}
+{{#env.piwik}}
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -124,7 +129,7 @@
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u="//{{server}}/";
+    var u="//{{& server}}/";
     _paq.push(['setTrackerUrl', u+'piwik.php']);
     _paq.push(['setSiteId', {{site_id}}]);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
@@ -133,6 +138,6 @@
 </script>
 <noscript><p><img src="//{{server}}/piwik.php?idsite={{site_id}}" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-{{/website.piwik}}
+{{/env.piwik}}
 </body>
 </html>

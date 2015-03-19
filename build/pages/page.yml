@@ -1,5 +1,6 @@
 meta_title:         "MDE cheat-sheet"
 meta_description:   "A cheat-sheet for the Markdown Extended syntax"
+#meta_robots:        none
 
 # on the basic model: **Markdown** _extended_ (**<strong>MDE</strong>** _<em>dingus</em>_)
 page_title:         "**MDE** _<em>cheat-sheet</em>_"

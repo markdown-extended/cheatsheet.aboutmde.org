@@ -4,11 +4,14 @@ git_modules/*
 composer.lock
 vendor/*
 */vendor/*
-var/*
-*/var/*
+tmp/*
+*/tmp/*
+env.yml
+!build/env/*/env.yml
 
 # for the main repo only
-www/index.html
+www/*.html
+www/.htaccess
 
 # hack
 !.gitkeep

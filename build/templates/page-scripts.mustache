@@ -7,7 +7,7 @@
 <script>
 var mdereminders_window; // use this variable to interact with the cheat sheet window
 function mdereminders_popup(url){
-    if (!url) url='{{& website.reminders_url}}';
+    if (!url) url='{{& env.reminders_url}}';
     if (url.lastIndexOf("popup")==-1) url += (url.lastIndexOf("?")!=-1) ? '&popup' : '?popup';
     mdereminders_window = window.open(url, 'markdown_reminders',
         'directories=0,menubar=0,status=0,location=0,scrollbars=1,resizable=1,fullscreen=0,width=840,height=380,left=120,top=120');
@@ -16,7 +16,7 @@ function mdereminders_popup(url){
 }
 
 $(function() {
-    var website_email = '{{website.contact}}';
+    var website_email = '{{& website.contact}}';
     $('#website-mailto')
         .attr('href', website_email)
         .html(website_email);

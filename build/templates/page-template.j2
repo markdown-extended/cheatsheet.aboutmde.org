@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{page.meta_title}} &bull; {{website.shortname}}</title>
-    {{#page.meta_description}}
-    <meta name="description" content="{{page.meta_description}}">
-    {{/page.meta_description}}
-    {{#page.meta_robots}}
-    <meta name="robots" content="{{page.meta_robots}}">
-    {{/page.meta_robots}}
+    <title>{{ page.meta_title }} &bull; {{ website.shortname }}</title>
+    {% if page.meta_description %}
+    <meta name="description" content="{{ page.meta_description }}">
+    {% endif %}
+    {% if page.meta_robots %}
+    <meta name="robots" content="{{ page.meta_robots }}">
+    {% endif %}
     <link rel="icon" type="image/png" href="32x32-solid.png" sizes="32x32">
 
-    {{> page-styles}}
+    {% include "page-styles.j2" %}
 
 </head>
 <body>
@@ -26,33 +26,33 @@
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{& website.home}}" title="{{website.presentation}}">{{website.name}}</a>
+                <a class="navbar-brand" href="{{ website.home | safe }}" title="{{ website.presentation }}">{{ website.name }}</a>
             </div>
             <div class="collapse navbar-collapse" id="page-navbar">
                 <ul class="nav navbar-nav">
-                {{#env.menu}}
-                    <li class="{{#is_active}}active{{/is_active}}"><a href="{{& url}}">{{title}}{{#is_active}} <span class="sr-only">(current)</span>{{/is_active}}</a></li>
-                {{/env.menu}}
+                {% for item in env.menu %}
+                    <li class="{% if item.is_active %}active{% endif %}"><a href="{{ item.url | safe }}">{{ item.title }}{% if item.is_active %} <span class="sr-only">(current)</span>{% endif %}</a></li>
+                {% endfor %}
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Tools <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="tools-list">
-                        {{#tools}}
-                            <li><a href="{{& link}}" title="{{description}}">{{name}}</a></li>
-                        {{/tools}}
+                        {% for tool in tools %}
+                            <li><a href="{{ tool.link | safe }}" title="{{ tool.description }}">{{ tool.name }}</a></li>
+                        {% endfor %}
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Implementations <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="implementations-list">
-                        {{#implementations}}
-                            <li><a href="{{& link}}" title="{{description}}">{{name}}</a></li>
-                        {{/implementations}}
+                        {% for impl in implementations %}
+                            <li><a href="{{ impl.link | safe }}" title="{{ impl.description }}">{{ impl.name }}</a></li>
+                        {% endfor %}
                         </ul>
                     </li>
                     <li>
-                        <a href="{{& website.sources}}" title="{{website.sources}}"><i class="fa fa-github"></i></a>
+                        <a href="{{ website.sources | safe }}" title="{{ website.sources }}"><i class="fa fa-github"></i></a>
                     </li>
                 </ul>
             </div>
@@ -61,7 +61,7 @@
 
     <div class="container main-container">
 
-        {{> page-content}}
+        {% include "page-content" %}
 
     </div>
 
@@ -69,57 +69,57 @@
         <div class="container">
             <div class="cleafix">
                 <p class="text-muted small">
-                    {{& page.page_footer}}
-                {{#page.modalbox_link}}
-                    &dash; <a href="#" data-toggle="modal" data-target="#page-modal-box">{{page.modalbox_link}}</a>
-                {{/page.modalbox_link}}                
-                {{#page.show_reminders_test_link}}
-                    &dash; <a href="{{& env.reminders_url}}" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
-                {{/page.show_reminders_test_link}}
+                    {{ page.page_footer | safe }}
+                {% if page.modalbox_link %}
+                    &dash; <a href="#" data-toggle="modal" data-target="#page-modal-box">{{ page.modalbox_link }}</a>
+                {% endif %}                
+                {% if page.show_reminders_test_link %}
+                    &dash; <a href="{{ env.reminders_url | safe }}" onclick="return mdereminders_popup();" title="Markdown syntax reminders (new floated window)" target="_blank">Markdown syntax reminders</a>
+                {% endif %}                
                 </p>
             </div>
             <hr>
             <div class="pull-left text-left">
-                <p class="text-muted small">{{& website.page_footer_left}}</p>
+                <p class="text-muted small">{{ website.page_footer_left | safe }}</p>
             </div>
             <div class="pull-right text-right">
                 <p class="text-muted small">
-                    <a href="{{& website.home}}">{{website.shortname}}</a>
+                    <a href="{{ website.home | safe }}">{{ website.shortname }}</a>
                     &nbsp;-&nbsp;
                     <a href="#" id="website-mailto"></a>
                     <br class="hidden-xs hidden-sm">
-                    Original sources are available at <a href="{{& website.sources}}">{{website.sources}}</a>.
+                    Original sources are available at <a href="{{ website.sources | safe }}">{{ website.sources }}</a>.
                 </p>
             </div>
         </div>
     </footer>
 
-    {{#page.modalbox}}
-    <div class="modal fade" id="page-modal-box" tabindex="-1" role="dialog" aria-labelledby="{{label}}" aria-describedby="{{description}}" aria-hidden="true">
+    {% if page.modalbox %}
+    <div class="modal fade" id="page-modal-box" tabindex="-1" role="dialog" aria-labelledby="{{ page.modalbox.label }}" aria-describedby="{{ page.modalbox.description }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-       {{#title}}
+       {% if page.modalbox.title %}
              <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="{{label}}">{{title}}</h4>
+                    <h4 class="modal-title" id="{{ page.modalbox.label }}">{{ page.modalbox.title }}</h4>
                 </div>
-        {{/title}}
+        {% endif %}
                 <div class="modal-body">
-                    {{& content}}
+                    {{ page.modalbox.content | safe }}
                 </div>
-       {{#footer}}
+       {% if page.modalbox.footer %}
                 <div class="modal-footer">
-                    {{& footer}}
+                    {{ page.modalbox.footer | safe }}
                 </div>
-       {{/footer}}
+        {% endif %}
             </div>
         </div>
     </div>
-    {{/page.modalbox}}
+    {% endif %}
 
-    {{> page-scripts}}
+    {% include "page-scripts" %}
 
-{{#env.piwik}}
+{% if env.piwik %}
 <!-- Piwik -->
 <script type="text/javascript">
   var _paq = _paq || [];
@@ -129,15 +129,16 @@
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u="//{{& server}}/";
+    var u="//{{ env.piwik.server | safe }}/";
     _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', {{site_id}}]);
+    _paq.push(['setSiteId', {{ env.piwik.site_id }}]);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<noscript><p><img src="//{{server}}/piwik.php?idsite={{site_id}}" style="border:0;" alt="" /></p></noscript>
+<noscript><p><img src="//{{ env.piwik.server | safe }}/piwik.php?idsite={{ env.piwik.site_id }}" style="border:0;" alt="" /></p></noscript>
 <!-- End Piwik Code -->
-{{/env.piwik}}
+{% endif %}
+<!-- page generated at ##{{ template_date | date('YYYY-MM-DD HH:mm') }}## -->
 </body>
 </html>

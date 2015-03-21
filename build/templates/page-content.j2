@@ -1,0 +1,44 @@
+
+<div class="page-header" id="page-header">
+    <h1>
+        <a href="/?#" title="{{ page.page_title }}"><img src="{{ page.page_logo | safe }}" alt="[M↓]" /></a>&nbsp; {{ page.page_title | safe }}
+        <br class="visible-xs"> <small><em>{{ page.page_description | safe }}</em></small>
+    </h1>
+</div>
+
+<div class="content" id="page-content" role="main">        
+{% for content in page.contents %}
+
+    {% if content.title %}
+    <h2>{{ content.title | safe }}
+        {% if content.description %}
+        &nbsp; <small><em>{{ content.description | safe }}</em></small>
+        {% endif %}
+    </h2>
+    {% endif %}
+
+    {% if content.intro %}
+    <div class="lead">{{ content.intro | safe }}</div>
+    {% endif %}
+
+    <div class="container">
+        {{ content.content | safe }}
+    </div>
+
+    {% if content.notes %}
+    <ul class="list-group small">
+        {% for note in content.notes %}
+        <li class="list-group-item">{{ note | safe }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if loop.last %}
+    <div class="clearfix"></div>
+    {% else %}
+    <hr class="clearfix">
+    {% endif %}
+
+{% endfor %}
+</div>
+

@@ -1,0 +1,13 @@
+meta_title:         "maintenance"
+meta_robots:        none
+page_title:         "oups :("
+contents:
+- j2:               |
+    The <a href="{{ website.home | safe }}">{{ website.shortname }}</a> website is living <strong>a technical maintenance</strong> and is not available for now ...
+    <br>
+    It should be back in few minutes.
+    <br>
+    For more info, please contact <a href="mailto:{{ website.contact | safe }}">{{ website.contact }}</a>.
+    <br>
+    <br>
+    Thank you for your comprehension.

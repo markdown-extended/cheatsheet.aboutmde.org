@@ -2,7 +2,7 @@
 SetEnv PHP_VER 5_4
 SetEnv ZEND_OPTIMIZER 0
 SetEnv REGISTER_GLOBALS 0
-SetEnv BASE_PATH {{& env.base_path}}
+SetEnv BASE_PATH {{ env.base_path }}
 
 # default global character set
 AddDefaultCharset utf-8
@@ -16,11 +16,11 @@ ServerSignature Off
 </IfModule>
 
 # setting up the 404 error page
-ErrorDocument 404 {{& env.base_path}}404.html
+ErrorDocument 404 {{ env.base_path }}404.html
 
 # URL rewriting
 RewriteEngine On
-RewriteBase {{& env.base_path}}
+RewriteBase {{ env.base_path }}
 
 # no access to anything beginning with a dot
 RewriteRule ^(.*/)?\.(.*)/ - [F]
@@ -30,27 +30,26 @@ RewriteCond %{HTTP_HOST} ^www\.aboutmde\.org [NC]
 RewriteRule ^(.*)$ http://aboutmde.org/$1 [R=301,L]
 
 # MAINTENANCE SECTION
-{{#is_maintenance}}
+{% if is_maintenance %}
 # MAINTENANCE ENABLED
-RewriteCond %{REQUEST_URI} !^({{& env.base_path}})?vendor/
+RewriteCond %{REQUEST_URI} !^({{ env.base_path }})?vendor/
 RewriteRule ^(.*)$ maintenance.html?$1 [QSA,L]
-{{/is_maintenance}}
-{{^is_maintenance}}
-#RewriteCond %{REQUEST_URI} !^({{& env.base_path}})?vendor/
+{% else %}
+#RewriteCond %{REQUEST_URI} !^({{ env.base_path }})?vendor/
 #RewriteRule ^(.*)$ maintenance.html?$1 [QSA,L]
-{{/is_maintenance}}
+{% endif %}
 
-{{#is_root}}
+{% if is_root %}
 # ROOT SECTION
 # default is home/www
-RewriteRule ^({{& env.base_path}})?home/www/ - [L]
+RewriteRule ^({{ env.base_path }})?home/www/ - [L]
 
 RewriteCond %{HTTP_HOST} ^aboutmde\.org [NC]
-RewriteRule ^({{& env.base_path}})?$ /home/www/index.html [QSA,L]
+RewriteRule ^({{ env.base_path }})?$ /home/www/index.html [QSA,L]
 
 RewriteCond %{HTTP_HOST} ^aboutmde\.org [NC]
-RewriteCond %{REQUEST_URI} !^({{& env.base_path}})?home/www/
+RewriteCond %{REQUEST_URI} !^({{ env.base_path }})?home/www/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^({{& env.base_path}})?(.*)$ home/www/$2 [L]
-{{/is_root}}
+RewriteRule ^({{ env.base_path }})?(.*)$ home/www/$2 [L]
+{% endif %}

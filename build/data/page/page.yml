@@ -18,4 +18,6 @@ page_active:        reminders
 # to show the test reminders link
 show_reminders_test_link: true
 
-content_intro:  "The table below lists all Markdown Extended syntax rules with examples. You can use the search field to filter table entries, or the selector to reach a specific section."
+contents:
+- intro:  "The table below lists all Markdown Extended syntax rules with examples. You can use the search field to filter table entries, or the selector to reach a specific section."
+  j2:     "{% include './build/templates/cheatsheet-content.j2' %}"

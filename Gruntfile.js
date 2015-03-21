@@ -1,319 +1,141 @@
 
-// global app config
-var _GRUNT, 
-    _ENV    = 'prod', 
-    _FLAGS  = {},
-    _APP    = {
-        // default cli options
-        default_options: {
-            dev:                false,
-            root:               false,
-            maintenance:        false
-        },
+'use strict';
 
-        // app paths
-        env_dir:                './build/env/',
-        data_dir:               './build/data/',
-        pages_dir:              './build/pages/',
-        templates_dir:          './build/templates/',
-        tmp_dir:                './tmp/',
-        www_dir:                './www/',
+// over-write this for per-fork config
+var USER_OPTIONS = {
 
-        // env configs
-        data_env:               'env.yml',
-        user_env:               './env.yml',
+    // pages list like:
+    // name => { data: data-file.yml , template: template.j2 , dest: destination.html }
 
-        // files masks
-        html_ext:               '.html',
-        pages_src_all:          '*.md',
-        data_src_all:           '*.yml',
+    // callback to transform data sent to templates
+    processData:    function(data){
 
-        // mde contents
-        md_template:            'md-template.html',
+        // cheatsheet specific
+        var markdown = require('marked');
 
-        // templates(s)
-        template_page:          'page-template.mustache',
-        template_meta_page:     'meta-page-template.mustache',
-        template_htaccess:      'htaccess.mustache',
+        // add the search_query
 
-        // .htaccess
-        web_htaccess:           '.htaccess',
-        data_htaccess:          'config-htaccess.json',
-
-        // index page
-        web_index:              'index.html',
-        data_index:             'config-index.json',
-        data_src_index:         'page.yml',
-
-        // 404 meta page
-        web_404:                '404.html',
-        data_404:               'config-404.json',
-        data_src_404:           '404/page.yml',
-
-        // maintenance meta page
-        web_maintenance:        'maintenance.html',
-        data_maintenance:       'config-maintenance.json',
-        data_src_maintenance:   'maintenance/page.yml',
-
-        // tasks options
-        markdown_options: function(){
-            return {
-                template:       this.md_template,
-                htmlExtension:  this.html_ext
-            };
-        },
-        merge_data_options: function(){
-            return {
-                data:           function(data){ return transformData(data); }
-            };
-        },
-        mustache_render_options: function(){
-            return {
-                clear_cache:    true,
-                directory:      this.templates_dir
-            };
-        },
-
-        // environment
-        getEnvConfigPath:       function() {
-            // user environment ?
-            var envfile     = this.env_dir + _ENV + '/' + this.data_env,
-                userenvfile = this.user_env;
-            if (_ENV=='dev' && _GRUNT.file.exists(userenvfile)) {
-                return userenvfile;
-            } else {
-                if (!_GRUNT.file.exists(envfile)) {
-                    _GRUNT.fail.fatal('environment config file "'+envfile+'" not found!');
+        // the mde_data for the cheatsheet
+        if (data.mde_data !== undefined) {
+            for (var k=0; k<data.mde_data.length; k++) {
+                var item = data.mde_data[k];
+                if (item.type == 'typo') {
+                    data.mde_data[k].type_name  = "Typographic";
+                    data.mde_data[k].long_type  = "typographic";
+                    data.mde_data[k].short_type = "T";
+                } else if (item.type == 'block') {
+                    data.mde_data[k].type_name  = "Block";
+                    data.mde_data[k].long_type  = "block";
+                    data.mde_data[k].short_type = "B";
+                } else if (item.type == 'misc') {
+                    data.mde_data[k].type_name  = "Miscellaneous";
+                    data.mde_data[k].long_type  = "miscellaneous";
+                    data.mde_data[k].short_type = "M";
                 }
-                return envfile;
+                for (var l=0; l<item.samples.length; l++) {
+                    var new_sample = {};
+                    new_sample.sample = item.samples[l];
+                    new_sample.mde_sample = markdown(new_sample.sample);
+                    data.mde_data[k].samples[l] = new_sample;
+                }
             }
         }
-    },
-    _APP_HELP = "\
-### \n\
-usage:    grunt (-d) (-v) [<task = 'default'>] [--dev] [–-root] [--maintenance] \n\
-\n\
-tasks:    htaccess          : generate the 'www/.htaccess' file \n\
-          index             : generate the 'www/index.html' file (based on 'build/pages/page.yml') \n\
-          404               : generate the 'www/404.html' file (based on 'build/pages/404/page.yml') \n\
-          maintenance       : generate the 'www/maintenance.html' file (based on 'build/pages/maintenance/page.yml') \n\
-          cleanup           : clean all generated and temporary files \n\
-          default           : 'htaccess' + 'index' + '404' + 'maintenance' tasks \n\
-          rebuild           : 'cleanup' + 'default' tasks \n\
-\n\
-options:  --dev             : load the 'dev' environment settings \n\
-          --root            : use this for 'root.aboutmde.org' \n\
-          --maintenance     : use this to enable the 'maintenance' mode \n\
-\n\
-All logic is stored in the 'Gruntfile.js'. \n\
-The special 'test' and 'debug' tasks can be used during development. \n\
-### \n\
-"
-    ;
 
-// custom data transformation
-var transformData = function (data)
-{
-    // current env info
-    data.is_dev         = (_ENV==='dev');
-    data.is_maintenance = (_FLAGS.maintenance===true);
-    data.is_root        = (_FLAGS.root===true);
-
-    if (data.page==undefined) {
         return data;
     }
 
-    // cheatsheet specific
-    var markdown = require('marked');
-
-    // add the search_query
-
-    // the mde_data for the cheatsheet
-    if (data.mde_data != undefined) {
-        for (var k=0; k<data.mde_data.length; k++) {
-            var item = data.mde_data[k];
-            data.mde_data[k].samples_count = item.samples.length;
-        	if (item.type == 'typo') {
-                data.mde_data[k].type_name  = "Typographic";
-                data.mde_data[k].long_type  = "typographic";
-                data.mde_data[k].short_type = "T";
-        	} else if (item.type == 'block') {
-                data.mde_data[k].type_name  = "Block";
-                data.mde_data[k].long_type  = "block";
-                data.mde_data[k].short_type = "B";
-        	} else if (item.type == 'misc') {
-                data.mde_data[k].type_name  = "Miscellaneous";
-                data.mde_data[k].long_type  = "miscellaneous";
-                data.mde_data[k].short_type = "M";
-        	}
-        	for (var l=0; l<item.samples.length; l++) {
-        	    var new_sample = {};
-        	    if (l>0) {
-                    new_sample.add_tr = true;
-        	    }
-                new_sample.sample = item.samples[l];
-                new_sample.mde_sample = markdown(new_sample.sample);
-                data.mde_data[k].samples[l] = new_sample;
-        	}
-        }
-    }
-
-    // current page
-    if (data.page.page_logo == undefined) {
-        data.page.page_logo = data.website.logo;
-    }
-    for (var i=0; i<data.env.menu.length; i++) {
-        var slug = data.env.menu[i].slug,
-            active = data.page.page_active || '';
-        if (slug == active) {
-            data.env.menu[i].is_active = true;
-            data.page.page_link = data.env.menu[i].url;
-            if (data.page.page_title == undefined) {
-                data.page.page_title = data.env.menu[i].title;
-            }
-        } else {
-            data.env.menu[i].is_active = false;
-        }
-    }
-
-    // organize contents
-    if (data.page.contents != undefined) {
-        for (var j=0; j<data.page.contents.length; j++) {
-            // markdown content
-            if (data.page.contents[j].markdown != undefined) {
-                var filename = data.page.contents[j].markdown,
-                    mdfile = _APP.tmp_dir + _APP.pages_dir + filename.replace(_APP.html_ext, '') + _APP.html_ext;
-                data.page.contents[j].content = _GRUNT.file.read(mdfile);
-            } else {
-                if (data.page.contents[j].notes && data.page.contents[j].notes.length>0) {
-                    data.page.contents[j].has_notes = true;
-                }
-            }
-            if (j<(data.page.contents.length-1)) {
-                data.page.contents[j].show_hr = true;
-            }
-        }
-    }
-
-    // always return the full data
-    return data;
 };
 
 // grunt compilation
 module.exports = function(grunt) {
 
-    _GRUNT  = grunt;
-
-    // cli arguments
-    var opt;
-    for (var index in _APP.default_options) {
-        opt = grunt.option(index);
-        _FLAGS[index] = opt || _APP.default_options[index];
+    // create the app catching init errors
+    try {
+        var PageModel = require('./tasks/page_model');
+        var app       = new PageModel(USER_OPTIONS, grunt);
+    } catch (err) {
+        grunt.fail.fatal(err);
     }
-    // env flag
-    if (_FLAGS.dev==true) {
-        _ENV = 'dev';
-    }
-    grunt.log.writeflags(_FLAGS, 'App flags');
 
+/*/
+//var p_config = app.getTaskOptions('markdown');
+//var p_files = app.getTaskFiles('markdown');
+//console.dir(p_config);
+//console.dir(p_files);
+return;
+//*/
+
+    // third-parties configs
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-markdown');
     grunt.loadNpmTasks('grunt-merge-data');
-    grunt.loadNpmTasks('grunt-mustache-render');
-
+    grunt.loadNpmTasks('grunt-nunjucks-render');
     grunt.initConfig({
+        clean:              {},
+        markdown:           { options: app.getTaskOptions('markdown') },
+        merge_data:         { options: app.getTaskOptions('merge_data') },
+        nunjucks_render:    { options: app.getTaskOptions('nunjucks_render') }
+    });
 
-        markdown: {
-            options:            _APP.merge_data_options(),
-            index: {
-                files: [{
-                    expand:     true,
-                    src:        _APP.pages_dir + _APP.pages_src_all,
-                    dest:       _APP.tmp_dir,
-                    ext:        _APP.html_ext
-                }]
-            }
-        },
+    // page(s) rendering
+    grunt.registerTask('render', 'the page-model renderer', function() {
+        var page        = (arguments.length>0 ? arguments[0] : 'all');
+        var count       = 0;
+        var page_names  = [];
 
-        merge_data: {
-            options:            _APP.merge_data_options(),
-            htaccess: {
-                src:            [ _APP.getEnvConfigPath() , _APP.data_dir + _APP.data_src_all ],
-                dest:           _APP.tmp_dir + _APP.data_htaccess
-            },
-            index: {
-                src:            [ _APP.getEnvConfigPath() , _APP.data_dir + _APP.data_src_all , _APP.pages_dir + _APP.data_src_index ],
-                dest:           _APP.tmp_dir + _APP.data_index
-            },
-            meta_404: {
-                src:            [ _APP.getEnvConfigPath() , _APP.data_dir + _APP.data_src_all , _APP.pages_dir + _APP.data_src_404 ],
-                dest:           _APP.tmp_dir + _APP.data_404
-            },
-            meta_maintenance: {
-                src:            [ _APP.getEnvConfigPath() , _APP.data_dir + _APP.data_src_all , _APP.pages_dir + _APP.data_src_maintenance ],
-                dest:           _APP.tmp_dir + _APP.data_maintenance
-            }
-        },
-
-        mustache_render: {
-            options:            _APP.mustache_render_options(),
-            htaccess: {
-                files : [{
-                    template:   _APP.templates_dir + _APP.template_htaccess,
-                    data:       _APP.tmp_dir + _APP.data_htaccess,
-                    dest:       _APP.www_dir + _APP.web_htaccess
-                }]
-            },
-            index: {
-                files : [{
-                    template:   _APP.templates_dir + _APP.template_page,
-                    data:       _APP.tmp_dir + _APP.data_index,
-                    dest:       _APP.www_dir + _APP.web_index
-                }]
-            },
-            meta_404: {
-                files : [{
-                    template:   _APP.templates_dir + _APP.template_meta_page,
-                    data:       _APP.tmp_dir + _APP.data_404,
-                    dest:       _APP.www_dir + _APP.web_404
-                }]
-            },
-            meta_maintenance: {
-                files : [{
-                    template:   _APP.templates_dir + _APP.template_meta_page,
-                    data:       _APP.tmp_dir + _APP.data_maintenance,
-                    dest:       _APP.www_dir + _APP.web_maintenance
-                }]
-            }
+        // get concerned pages
+        try {
+            var pages = app.getTaskPagesList(page);
+        } catch (err) {
+            grunt.fail.fatal(err);
         }
 
+        // global markdown for now ...        
+        grunt.config.set(
+            'markdown.all',
+            app.getTaskFiles('markdown')
+        );
+
+        // setup all tasks for each page
+        for (var p in pages) {
+            page_names.push(p);
+            grunt.config.set('merge_data.' + p, app.getTaskFiles('merge_data', p));
+            grunt.config.set('nunjucks_render.' + p, app.getTaskFiles('nunjucks_render', p));
+            count++;
+        }
+
+        // call tasks
+        grunt.log.writeln('Processing ' + count + ' pages: ' + page_names.join(', '));
+        grunt.task.run('markdown','merge_data','nunjucks_render');
     });
 
-    grunt.registerTask('htaccess',      ['merge_data:htaccess','mustache_render:htaccess']);
-    grunt.registerTask('index',         ['markdown:index','merge_data:index','mustache_render:index']);
-    grunt.registerTask('404',           ['merge_data:meta_404','mustache_render:meta_404']);
-    grunt.registerTask('maintenance',   ['merge_data:meta_maintenance','mustache_render:meta_maintenance']);
 
-    grunt.registerTask('cleanup', 'cleanup generated files', function(){
-        _GRUNT.file.delete(_APP.tmp_dir);
-        _GRUNT.file.delete(_APP.www_dir + _APP.web_htaccess);
-        _GRUNT.file.delete(_APP.www_dir + _APP.web_index);
-        _GRUNT.file.delete(_APP.www_dir + _APP.web_404);
-        _GRUNT.file.delete(_APP.www_dir + _APP.web_maintenance);
+    // page(s) cleaning
+    grunt.registerTask('cleanup', 'the page-model cleaner', function() {
+        var page = (arguments.length>0 ? arguments[0] : 'all');
+
+        // get concerned pages
+        try {
+            var pages = app.getTaskPagesList(page);
+        } catch (err) {
+            grunt.fail.fatal(err);
+        }
+
+        // setup all tasks for each page
+        for (var p in pages) {
+            grunt.config.set('clean.' + p, app.getTaskFiles('clean', p));
+        }
+
+        // call "clean" task
+        grunt.task.run('clean');
     });
 
+    // help string
     grunt.registerTask('help', 'see cli available options', function() {
-        _GRUNT.log.write(_APP_HELP);
+        grunt.log.write(PageModel.help_string);
     });
 
-    grunt.registerTask('debug', 'show current app options', function() {
-        _GRUNT.log.subhead('current app object:');
-        _GRUNT.log.writeflags(_APP);
-    });
-
-    grunt.registerTask('test', 'a simple test space ...', function() {
-        _GRUNT.log.write('todo ...');
-    });
-
-    grunt.registerTask('default',       ['htaccess','index','404','maintenance']);
-    grunt.registerTask('rebuild',       ['cleanup','default']);
+    // common tasks
+    grunt.registerTask('default',       ['render']);
+    grunt.registerTask('rebuild',       ['cleanup','render']);
 };

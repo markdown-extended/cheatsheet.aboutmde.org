@@ -1,0 +1,79 @@
+
+<div class="alert alert-info dismissable visible-xs">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>NOTE</strong> - As this table is quite large, you should go to the "landscape" view of your device to view it under optimal conditions.
+</div>
+
+<br class="clearfix">
+<div class="row">
+    <div class="col-xs-12 col-sm-6">
+        <form class="form-horizontal form-nav" role="form" id="filter-field">
+            <label class="sr-only control-label" for="tableFilter">Filter table entries</label>
+            <span class="fa fa-search" id="tableFilter-icon-empty"></span>
+            <a href="#" title="Empty this search field" id="tableFilter-icon-filled"><span class="fa fa-times"></span></a>
+            <input type="search" name="filter-table" id="tableFilter" class="form-control search-query" placeholder="Filter table values" title="Type a string to filter table entries" tabindex="1" value="{{ search_query }}">
+            <p class="help-block">Presets: <span id="quick-list-container"></span></p>
+        </form>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+        <select class="form-control" id="gotoSelector">
+              <option value="" class="disabled">Go to a section</option>
+        {% for item in mde_data %}
+              <option value="{{ item.name }}">{{ item.name }}</option>
+        {% endfor %}
+        </select>
+    </div>
+</div>
+<br class="clearfix">
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover tablefiltrable">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Name</th>
+        <th>Sample</th>
+        <th>Rendering</th>
+    </tr>
+    </thead>
+    <tbody>
+
+{% for item in mde_data %}
+    <tr data-rows="{{ item.samples|length }}">
+        <td rowspan="{{ item.samples|length }}" data-filter-value="{{ item.long_type }}">
+            <abbr title="{{ item.type_name }}">{{ item.short_type }}</abbr>
+        </td>
+        <td id="{{ item.name }}" rowspan="{{ item.samples|length }}" data-filter-value="{{ item.name }}">
+            {{ item.name }}
+        </td>
+    {% if item.samples|length %}
+	    {% for sample in item.samples %}
+		{% if not loop.first %}<tr>{% endif %}
+        <td class="large"><pre>{{ sample.sample }}</pre></td>
+        <td class="large">{{ sample.mde_sample|safe }}</td>
+    </tr>
+        {% endfor %}
+	{% else %}
+        <td></td>
+        <td></td>
+    </tr>
+	{% endif %}
+{% endfor %}
+
+    </tbody>
+    </table>
+</div>
+
+<!--
+<?php
+$_footnotes = $cheat_sheet->getFootnotes();
+if (!empty($_footnotes)) : ?>
+<div class="footnotes">
+    <ol>
+    <?php foreach ($_footnotes as $id=>$note_content) : ?>
+        <li id="<?php echo $note_content['note-id']; ?>"><?php echo $note_content['text']; ?></li>
+    <?php endforeach; ?>
+    </ol>
+</div>
+<?php endif; ?>
+-->

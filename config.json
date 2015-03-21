@@ -1,0 +1,45 @@
+{
+    "data_env":         "env.yml",
+    "user_env":         "./env.yml",
+    "extensions": {
+        "md":           ".md",
+        "data":         ".yml",
+        "page":         ".html",
+        "dest":         ".html",
+        "template":     ".j2"
+    },
+    "paths": {
+        "env":          "./build/env/",
+        "data":         "./build/data/",
+        "page":         "./build/pages/",
+        "template":     "./build/templates/",
+        "tmp":          "./tmp/",
+        "dest":         "./www/"
+    },
+    "global": {
+        "md_template":  "md-template.html",
+        "template":     "page-template.j2",
+        "data":         "./build/data/*.yml"
+    },
+    "pages": {
+        "htaccess": {
+            "template":     "htaccess.j2",
+            "dest":         ".htaccess",
+            "ext":          false
+        },
+        "index": {
+            "data":         "page/page.yml",
+            "dest":         "index.html"
+        },
+        "404": {
+            "template":     "meta-page-template.j2",
+            "data":         "404/page.yml",
+            "dest":         "404.html"
+        },
+        "maintenance": {
+            "template":     "meta-page-template.j2",
+            "data":         "maintenance/page.yml",
+            "dest":         "maintenance.html"
+        }
+    }    
+}

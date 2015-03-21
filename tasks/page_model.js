@@ -211,10 +211,9 @@ PageModel.prototype.transformData = function(data)
         }
     }
 
-    // organize contents
+    // organize contents: markdown BEFORE user process on data
     if (data.page.contents != undefined) {
         for (var j=0; j<data.page.contents.length; j++) {
-
             // markdown content
             if (data.page.contents[j].markdown != undefined) {
                 var filename = data.page.contents[j].markdown,
@@ -227,19 +226,23 @@ PageModel.prototype.transformData = function(data)
                     throw new Error('Markdown file "' + mdfile + '" not found');
                 }
             }
-
-            // jinja content
-            if (data.page.contents[j].j2 != undefined) {
-                var str = data.page.contents[j].j2;
-                data.page.contents[j].content = renderString(str, data, this.options);
-            }
-
         }
     }
 
     // user option
     if (this.options.processData && nlib.isFunction(this.options.processData)) {
         data = this.options.processData(data);
+    }
+
+    // organize contents: nunjucks AFTER user process on data
+    if (data.page.contents != undefined) {
+        for (var j=0; j<data.page.contents.length; j++) {
+            // jinja content
+            if (data.page.contents[j].j2 != undefined) {
+                var str = data.page.contents[j].j2;
+                data.page.contents[j].content = renderString(str, data, this.options);
+            }
+        }
     }
 
     // always return the full data

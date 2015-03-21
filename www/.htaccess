@@ -30,6 +30,9 @@ RewriteCond %{HTTP_HOST} ^www\.aboutmde\.org [NC]
 RewriteRule ^(.*)$ http://aboutmde.org/$1 [R=301,L]
 
 # MAINTENANCE SECTION
+
 #RewriteCond %{REQUEST_URI} !^(/)?vendor/
 #RewriteRule ^(.*)$ maintenance.html?$1 [QSA,L]
+
+
 
